@@ -1,0 +1,35 @@
+table dim_department
+	lineageTag: f9a36a10-028f-43a9-b1b8-28a392bb0f05
+
+	column department_vp
+		dataType: string
+		lineageTag: 8a19b0dc-015b-4873-9c7f-fc285b12448a
+		sourceColumn: department_vp
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column department_id
+		dataType: int64
+		lineageTag: 11701d6e-00c3-4a58-8ff3-146f80ca8317
+		summarizeBy: none
+		sourceColumn: department_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_department = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    Sheet = Source{[Item="Department",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"VP", "VP"}, {"Department", "Department"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"VP", type text}, {"Department", Int64.Type}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type",{"Department", "VP"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Reordered Columns",{{"Department", "department_id"}, {"VP", "department_vp"}})
+				 in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

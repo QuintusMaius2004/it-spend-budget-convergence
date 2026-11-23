@@ -1,0 +1,194 @@
+table fact_it_spend
+	lineageTag: de852680-e093-4f41-bccf-ad8df06573ce
+
+	measure Amount = TOTALYTD(SUM([value]), 'dim_date'[date])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: e8488b67-a38b-48e4-a521-6b7ed3b33405
+
+	measure Actual = CALCULATE([Amount], dim_scenario[scenario_description]="Actual")
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: b48cb04e-65b9-4f24-a219-84e8927b4441
+
+	measure LE1 = CALCULATE([Amount], dim_scenario[scenario_description]="Latest Estimate 1")
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 2ccd9cd2-600b-4f33-be5f-e8153b14f6c1
+
+	measure LE2 = CALCULATE([Amount], dim_scenario[scenario_description]="Latest Estimate 2")
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: f3fd111c-2c81-485b-ba94-21880d8ea139
+
+	measure LE3 = CALCULATE([Amount], dim_scenario[scenario_description]="Latest Estimate 3")
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: f2c713e3-7900-4cb4-a414-8f85a32f5d0a
+
+	measure Plan = CALCULATE([Amount], dim_scenario[scenario_description]="Plan")
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: a4507942-9e46-452e-95d8-0d4c4b276467
+
+	measure 'Var LE1' = [Actual]-[LE1]
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: babb80f0-6849-4fd3-9295-e75a68d7e27d
+
+	measure 'Var LE2' = [Actual]-[LE2]
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 2d8333a3-d4cd-45f6-8f0e-9d6f2690fe06
+
+	measure 'Var LE3' = [Actual]-[LE3]
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		lineageTag: ad2c848c-3f90-40ef-a3e9-9a33495814ce
+
+	measure 'Var Plan' = [Actual]-[Plan]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 7bd13bea-01d5-4f8a-b3cc-fb82629917e6
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Var LE1 %' = DIVIDE([Var LE1],[LE1], BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b6ecc636-353a-4739-bb1b-68a70bd321a0
+
+	measure 'Var LE2 %' = DIVIDE([Var LE2],[LE2], BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 13882fd7-dd85-424c-8c6a-9aece6ca8320
+
+	measure 'Var LE3 %' = DIVIDE([Var LE3],[LE3], BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6c065d8f-7baa-4ff6-b031-21d9c91e8182
+
+	measure 'Var Plan %' = DIVIDE([Var Plan],[Plan], BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 915bef39-81c9-4b2b-849a-66d0bdcdaa42
+
+	measure 'Convergence %' = ABS([Var Plan %]) - ABS([Var LE3 %])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cc64af32-c00a-4e41-bf0f-222b3d9ddf07
+
+	measure 'Convergence $' = ABS([Var Plan]) - ABS([Var LE3])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ee0cc0f3-9738-4049-b4ca-78c7092e5389
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Var Plan % Label' =
+			
+			VAR v = [Var Plan %]
+			RETURN IF(v >= 0, "▲ " & FORMAT(v, "0.00%"), "▼ " & FORMAT(v, "0.00%"))
+		lineageTag: dc462ea3-70e8-40f5-b9d8-c499d32bc5d8
+
+	measure 'Var LE1 % Label' =
+			
+			VAR v = [Var LE1 %]
+			RETURN IF(v >= 0, "▲ " & FORMAT(v, "0.00%"), "▼ " & FORMAT(v, "0.00%"))
+		lineageTag: d641c1f9-0fb0-4f32-843c-676c8af6f7b4
+
+	measure 'Var LE2 % Label' =
+			
+			VAR v = [Var LE2 %]
+			RETURN IF(v >= 0, "▲ " & FORMAT(v, "0.00%"), "▼ " & FORMAT(v, "0.00%"))
+		lineageTag: 351aa170-c081-4ab2-8097-35c0b1ec2628
+
+	measure 'Var LE3 % Label' =
+			
+			VAR v = [Var LE3 %]
+			RETURN IF(v >= 0, "▲ " & FORMAT(v, "0.00%"), "▼ " & FORMAT(v, "0.00%"))
+		lineageTag: 243b84b9-3581-4049-a88a-08a6fb2efe40
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 0f24de2d-5726-4573-9861-242b990a7866
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column value
+		dataType: double
+		lineageTag: 41688ec2-5816-40a3-8886-da3feeffecd7
+		summarizeBy: sum
+		sourceColumn: value
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation SummarizationSetBy = Automatic
+
+	column department_id
+		dataType: double
+		lineageTag: 0e6b8beb-dff8-4ce1-ad80-364dc477c00f
+		summarizeBy: none
+		sourceColumn: department_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_element_id
+		dataType: double
+		lineageTag: 528281d9-5376-4cef-bd7a-1f1a69264db6
+		summarizeBy: none
+		sourceColumn: cost_element_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_area_id
+		dataType: double
+		lineageTag: df44ccbe-5cee-42a8-b5c4-6521c8a13854
+		summarizeBy: none
+		sourceColumn: business_area_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation SummarizationSetBy = Automatic
+
+	column it_sub_area_id
+		dataType: double
+		lineageTag: 5ba6b8e1-ea9d-4b01-81c7-8a9c75108857
+		summarizeBy: none
+		sourceColumn: it_sub_area_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_id
+		dataType: double
+		lineageTag: 8a56b733-7c95-43ab-a197-6588239604ff
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_id
+		dataType: double
+		lineageTag: 0ca4e4ca-3c11-4dca-9068-ca4c1e4be9d5
+		summarizeBy: none
+		sourceColumn: region_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_it_spend = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    Sheet = Source{[Item="Fact",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"Date", "date"}, {"Value", "value"}, {"Department", "department_id"}, {"Cost Element ID", "cost_element_id"}, {"Business Area ID", "business_area_id"}, {"IT Sub Area ID", "it_sub_area_id"}, {"Scenario ID", "scenario_id"}, {"Country/Region ID", "region_id"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"date", type date}, {"department_id", type number}, {"cost_element_id", type number}, {"business_area_id", type number}, {"it_sub_area_id", type number}, {"scenario_id", type number}, {"region_id", type number}, {"value", type number}}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Changed Type", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Removed Blank Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,4 @@
+# Source data is not redistributed here
+*.xlsx
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

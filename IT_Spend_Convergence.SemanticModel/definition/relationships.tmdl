@@ -1,0 +1,28 @@
+relationship 5eb17777-e9c8-493b-9d81-c5adb900e09a
+	fromColumn: fact_it_spend.scenario_id
+	toColumn: dim_scenario.scenario_id
+
+relationship 16eae15a-3aea-445b-94b6-43eb0d1c86b0
+	fromColumn: fact_it_spend.it_sub_area_id
+	toColumn: dim_it_area.it_sub_area_id
+
+relationship c4633d95-838e-4156-a8c1-906d157a153f
+	fromColumn: fact_it_spend.business_area_id
+	toColumn: dim_business_area.business_area_id
+
+relationship f18fc136-4954-40db-9c7a-08bab06c5a8d
+	fromColumn: fact_it_spend.cost_element_id
+	toColumn: dim_cost_element.cost_element_id
+
+relationship 3a0ed39a-366d-407a-ade6-67c9755849f8
+	fromColumn: fact_it_spend.department_id
+	toColumn: dim_department.department_id
+
+relationship b8fa9cc0-0e1d-45c7-853c-1533595a20b0
+	fromColumn: fact_it_spend.date
+	toColumn: dim_date.date
+
+relationship 253bbba6-9e2f-1e6b-1141-8a6b1903ac9b
+	fromColumn: fact_it_spend.region_id
+	toColumn: dim_region.region_id
+

@@ -1,0 +1,87 @@
+table dim_date
+	lineageTag: 7db1ef7c-3384-4c6f-8269-9db1be0279ef
+	dataCategory: Time
+
+	column date
+		dataType: dateTime
+		isHidden
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 0ae93bd6-f6be-49e8-bc9c-cdaa9f180203
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column year
+		dataType: int64
+		lineageTag: c2b99de9-f6ad-4aa0-98c8-aa1867beffdb
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column period
+		dataType: int64
+		lineageTag: 00d197da-ece0-4201-acf8-bebb9dc1040a
+		summarizeBy: none
+		sourceColumn: period
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column month = Format([date],"MMM")
+		lineageTag: 8758aebb-3bcd-4a47-b646-98a0f575edba
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter = "Quarter" & " " & QUARTER('dim_date'[date])
+		dataType: string
+		lineageTag: 093171f3-35ee-49aa-b802-cedd5bc21bc1
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy date_hierarchy
+		lineageTag: fed3dd1c-0147-44a1-9ee1-2fa98de32034
+
+		level year
+			lineageTag: 4a44aedd-20fe-4178-8acf-b8de14ae8e8e
+			column: year
+
+		level quarter
+			lineageTag: fc2ff46a-8b6a-4fab-a535-098c5fd9b01c
+			column: quarter
+
+		level month
+			lineageTag: fb92107a-8358-42e3-8133-342f108f398d
+			column: month
+
+		level date
+			lineageTag: ad4c62ac-9cb6-4988-af97-a698d15b29f1
+			column: date
+
+	partition dim_date = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    Sheet = Source{[Item="Date",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"Date", "Date"}, {"Year", "Year"}, {"Period", "Period"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"Date", type datetime}, {"Year", Int64.Type}, {"Period", Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"Date", "date"}, {"Year", "year"}, {"Period", "period"}, {"Month", "month"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns1",{{"date", type date}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"month"})
+				 in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

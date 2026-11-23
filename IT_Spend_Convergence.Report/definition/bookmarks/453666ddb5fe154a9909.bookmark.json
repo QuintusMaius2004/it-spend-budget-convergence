@@ -1,0 +1,686 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Region",
+  "name": "453666ddb5fe154a9909",
+  "options": {
+    "targetVisualNames": [
+      "0ac390bc818a64af809f",
+      "cbbb593704e2c55fb535"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "66e94d785934ee62052c",
+    "sections": {
+      "66e94d785934ee62052c": {
+        "visualContainers": {
+          "1477de2a55a14ef7e4fa": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d5f5b7411a71d9a9a98c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_business_area"
+                        }
+                      },
+                      "Property": "business_area_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_business_area"
+                        }
+                      },
+                      "Property": "business_area_name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "3401d38ea97d03693d60": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "bd1b87e10740602bae30": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "cf334436905bd8a13e17": {
+            "singleVisual": {
+              "visualType": "pageNavigator",
+              "objects": {}
+            }
+          },
+          "b1cfb0b1283a92b32337": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "19bd1c263b1db60f321e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var Plan"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var Plan"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "bb87b301944da14d1c65": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "88b3f7f1d7be4e3ab15d",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Actual"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Actual"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "be3863cb491d2e475c50": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "cb9663c069712a693376",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_date"
+                        }
+                      },
+                      "Property": "month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5bcae888b68aacc2e0eb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var Plan %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "317510d85990b41647f5",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var LE3 %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "071550f7d1981219993d",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var LE2 %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "03b37f930390e8c2bde4",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var LE1 %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var Plan %"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_date"
+                        }
+                      },
+                      "Property": "month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "c92bc91f4460a3649f89": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fd4eaf8878d460afdef3",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Actual"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "57e3cd2bc3068a333ab0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_cost_element"
+                        }
+                      },
+                      "Property": "cost_element_group"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "clusteredColumnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Actual"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_cost_element"
+                        }
+                      },
+                      "Property": "cost_element_group"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ca5b5ab48ae353cb828b": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "7420dd61afdec9990c51",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var LE3"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Var LE3"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "f4a2a600d45172cc1614": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a73a932a3df2cfc3ff4c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Plan"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Plan"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "31f02383a6c9fb9fe5f2": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "63757d6a1477d9a5dc5a",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_cost_element"
+                        }
+                      },
+                      "Property": "cost_element_group"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ff983e7544edcec531ea",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Convergence %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Convergence %"
+                    }
+                  }
+                }
+              ],
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "e47e04ac95a13f004e2c": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "53e2e98aef5a25e5c74b": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "d2379425d0778289113b": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "cbbb593704e2c55fb535": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f6614c25ddaa705b9f11",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_region"
+                        }
+                      },
+                      "Property": "region_group"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "58d404569f2e9096980a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Actual"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineClusteredColumnComboChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Actual"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_region"
+                        }
+                      },
+                      "Property": "region_group"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "0ac390bc818a64af809f": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c8acdfa99f94cabad433",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Convergence %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fae1625f1157d291eed6",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_region"
+                        }
+                      },
+                      "Property": "region_group"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "c0882972093d895e0449",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_region"
+                        }
+                      },
+                      "Property": "region_country"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_it_spend"
+                        }
+                      },
+                      "Property": "Convergence %"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

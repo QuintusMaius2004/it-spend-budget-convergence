@@ -1,0 +1,36 @@
+table dim_business_area
+	lineageTag: 602418a1-be03-4526-8de6-3266c49e63a9
+
+	column business_area_name
+		dataType: string
+		lineageTag: 9f10a6b6-a807-4acb-a566-c613f41480cb
+		sourceColumn: business_area_name
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column business_area_id
+		dataType: double
+		isHidden
+		lineageTag: 8abdb1b9-b2c3-4e1f-a724-5419c594f671
+		sourceColumn: business_area_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_business_area = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    Sheet = Source{[Item="Business Area",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"Business Area", "Business Area"}, {"Business Area ID", "Business Area ID"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"Business Area", type text}, {"Business Area ID", type number}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"Business Area", "business_area"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns1",{"Business Area ID", "business_area"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Reordered Columns",{{"Business Area ID", "business_area_id"}, {"business_area", "business_area_name"}})
+				 in
+				    #"Renamed Columns2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

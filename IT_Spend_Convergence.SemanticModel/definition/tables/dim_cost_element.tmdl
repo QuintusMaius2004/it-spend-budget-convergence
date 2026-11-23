@@ -1,0 +1,43 @@
+table dim_cost_element
+	lineageTag: 1beaf239-3d27-471b-b7c5-766a2419b011
+
+	column cost_element_name
+		dataType: string
+		lineageTag: ad6c3ecc-733f-44c5-bddd-2d78dcd1619c
+		sourceColumn: cost_element_name
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column cost_element_group
+		dataType: string
+		lineageTag: 2e53fc36-d181-429a-8113-5aa0dcc8dbec
+		sourceColumn: cost_element_group
+
+	column cost_element_sub_group
+		dataType: string
+		lineageTag: f206b2bf-ba6d-4acd-af2c-7d6bb8442cab
+		sourceColumn: cost_element_sub_group
+
+	column cost_element_id
+		dataType: double
+		isHidden
+		lineageTag: 07f6f6fa-7185-45c4-ab1f-7ec2d13577e7
+		sourceColumn: cost_element_id
+
+	partition dim_cost_element = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    Sheet = Source{[Item="Cost Element",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"Cost element name", "Cost element name"}, {"Cost Element Group", "Cost Element Group"}, {"Cost Element Sub Group", "Cost Element Sub Group"}, {"Cost Element ID", "Cost Element ID"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"Cost element name", type text}, {"Cost Element Group", type text}, {"Cost Element Sub Group", type text}, {"Cost Element ID", type number}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type",{"Cost Element ID", "Cost element name", "Cost Element Group", "Cost Element Sub Group"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Reordered Columns",{{"Cost Element ID", "cost_element_id"}, {"Cost element name", "cost_element_name"}, {"Cost Element Group", "cost_element_group"}, {"Cost Element Sub Group", "cost_element_sub_group"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

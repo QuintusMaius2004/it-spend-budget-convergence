@@ -1,0 +1,49 @@
+table dim_region
+	lineageTag: af5d9332-e9ac-46ff-941d-0a8f1b2f4312
+
+	column region_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 756a017d-ec99-49ed-85db-d3732dfa5b0c
+		summarizeBy: none
+		sourceColumn: region_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_country
+		dataType: string
+		lineageTag: b4d01d1a-7efc-47a8-b9d6-ebc9b00ad97c
+		summarizeBy: none
+		sourceColumn: region_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_group
+		dataType: string
+		lineageTag: b1e37ccc-6500-43a1-b220-507e6ebb08af
+		summarizeBy: none
+		sourceColumn: region_group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Country = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    #"Country Region_Sheet" = Source{[Item="Country Region",Kind="Sheet"]}[Data],
+				    #"Promoted Headers1" = Table.PromoteHeaders(#"Country Region_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers1",{{"Sales Region", type text}, {"Country/Region", type text}, {"Country/Region ID", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Sales Region", "region"}, {"Country/Region", "country"}, {"Country/Region ID", "region_id"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"region_id", "country", "region"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Reordered Columns",{{"region", "region_group"}, {"country", "region_country"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns1","Canada","North America",Replacer.ReplaceText,{"region_group"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","USA","North America",Replacer.ReplaceText,{"region_group"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","Puerto Rico","Puerto Rico (US)",Replacer.ReplaceText,{"region_country"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","USA","United States",Replacer.ReplaceText,{"region_country"})
+				in
+				    #"Replaced Value3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,45 @@
+table dim_it_area
+	lineageTag: ffc10d95-0519-44d7-aab2-50d93c1c76d6
+
+	column area
+		dataType: string
+		lineageTag: d808f327-31e0-4ecb-ac12-a410bc113c76
+		sourceColumn: area
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column sub_area
+		dataType: string
+		lineageTag: 61815e10-f259-4229-94f7-6bd8219e7449
+		sourceColumn: sub_area
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column it_sub_area_id
+		dataType: double
+		lineageTag: 538538f1-21a6-41e6-b92f-9df31611c2bc
+		summarizeBy: none
+		sourceColumn: it_sub_area_id
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_it_area = m
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Other\Subject\Data Analyst\Power BI\Project\1st PL-300 Datapot\Dataset\IT Spend Analysis Sample-no-PV.xlsx"), null, true),
+				    Sheet = Source{[Item="IT Area",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"IT Area", "IT Area"}, {"IT Sub Area", "IT Sub Area"}, {"IT Sub Area ID", "IT Sub Area ID"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"IT Area", type text}, {"IT Sub Area", type text}, {"IT Sub Area ID", type number}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"IT Sub Area ID", "it_sub_area_id"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns1",{"it_sub_area_id", "IT Area", "IT Sub Area"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Reordered Columns",{{"IT Area", "area"}}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Renamed Columns2",{"it_sub_area_id", "IT Sub Area", "area"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Reordered Columns1",{{"IT Sub Area", "sub_area"}})
+				 in
+				    #"Renamed Columns3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
